@@ -13,13 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_SERVER_IP }}
-          REMOTE_USER: virt140108
-          SOURCE: "./"
-          TARGET: "/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/"
-          ARGS: "-rlgoDzvc -i --delete"
-          EXCLUDE: "/.git/, /.github/, /node_modules/, .gitignore, README.md"
+      - name: SSH setup — write private key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: SSH keyscan — trust host
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "${{ secrets.HOST_SERVER_IP }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: |
+          rsync -vrm --exclude '.git*' --exclude '.github*' ./* virt140108@${{ secrets.HOST_SERVER_IP }}:/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/
