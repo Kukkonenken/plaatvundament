@@ -60,7 +60,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.plaatvundament.com https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://api.plaatvundament.com https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://plaatvundament-com.vserver.zonevs.eu https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; base-uri 'self'; form-action https://plaatvundament-com.vserver.zonevs.eu https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
     />
     <link
       rel="stylesheet"
@@ -1676,7 +1676,7 @@
         var submitBtn = document.getElementById("contact-form-submit");
         if (!form || !msgEl || !submitBtn) return;
 
-        var endpoint = "https://api.plaatvundament.com/kontakti-vorm.php";
+        var endpoint = "https://plaatvundament-com.vserver.zonevs.eu/kontakti-vorm.php";
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
