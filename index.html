@@ -893,77 +893,6 @@
         margin-top: 1.25rem;
       }
 
-      .form-row-files .form-file-label-text {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.35rem;
-        font-size: 0.9rem;
-      }
-
-      .form-file-drop {
-        position: relative;
-        border: 2px dashed rgba(255, 255, 255, 0.35);
-        border-radius: 10px;
-        padding: 1rem 1rem 0.85rem;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.04);
-        cursor: pointer;
-        transition:
-          border-color 0.2s ease,
-          background 0.2s ease;
-      }
-
-      .form-file-drop.is-dragover {
-        border-color: var(--accent);
-        background: rgba(196, 92, 38, 0.12);
-      }
-
-      .form-file-hint {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #c9d0dc;
-        line-height: 1.5;
-      }
-
-      .form-file-browse {
-        display: inline-block;
-        margin-top: 0.35rem;
-        padding: 0.45rem 0.9rem;
-        font: inherit;
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-left: 0.15rem;
-        color: #fff;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        border-radius: 8px;
-      }
-
-      .form-file-browse:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 0.35);
-      }
-
-      .form-file-browse:focus-visible {
-        outline: 3px solid var(--focus);
-        outline-offset: 2px;
-      }
-
-      .form-file-selected {
-        margin: 0.65rem 0 0;
-        font-size: 0.82rem;
-        color: #a8b4c4;
-        word-break: break-word;
-      }
-
-      .form-file-note {
-        margin: 0.45rem 0 0;
-        font-size: 0.75rem;
-        color: #8b95a8;
-        line-height: 1.4;
-      }
-
       .btn-inverse {
         background: var(--accent);
         color: #fff;
@@ -1629,7 +1558,6 @@
             class="contact-form"
             action="https://formspree.io/f/meeprjgw"
             method="POST"
-            enctype="multipart/form-data"
             aria-label="Kirjuta meile"
           >
             <input type="hidden" name="_language" value="et" />
@@ -1652,35 +1580,6 @@
             <div class="form-row">
               <label for="contact-phone">Telefon</label>
               <input id="contact-phone" name="Telefon" type="tel" />
-            </div>
-
-            <div class="form-row form-row-files">
-              <span class="form-file-label-text" id="contact-files-label">Manused (valikuline)</span>
-              <div
-                class="form-file-drop"
-                id="contact-file-drop"
-                role="group"
-                aria-labelledby="contact-files-label"
-              >
-                <input
-                  type="file"
-                  id="contact-files"
-                  name="attachment"
-                  class="visually-hidden"
-                  multiple
-                  tabindex="-1"
-                />
-                <p class="form-file-hint">
-                  Lohista failid siia või
-                  <button type="button" class="form-file-browse" id="contact-file-browse">
-                    Lisa fail arvutist
-                  </button>
-                </p>
-                <p class="form-file-selected" id="contact-file-selected" hidden></p>
-              </div>
-              <p class="form-file-note">
-                PDF, pildid või ZIP. Mitu faili korraga — kuni umbes 25 MB kokku (Formspree piirang).
-              </p>
             </div>
 
             <div class="form-row">
@@ -1917,10 +1816,6 @@
           btn.textContent = "Saadan...";
 
           var data = new FormData(formEl);
-          var fileInput = document.getElementById("contact-files");
-          if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            data.delete("attachment");
-          }
 
           try {
             var response = await fetch(formEl.action, {
@@ -1980,88 +1875,6 @@
           }
         });
       }
-
-      (function contactFileDrop() {
-        var form = document.getElementById("contact-form");
-        var input = document.getElementById("contact-files");
-        var drop = document.getElementById("contact-file-drop");
-        var browse = document.getElementById("contact-file-browse");
-        var selected = document.getElementById("contact-file-selected");
-        if (!form || !input || !drop || !browse || !selected) return;
-
-        function fileNames(files) {
-          if (!files || !files.length) return "";
-          return Array.prototype.map
-            .call(files, function (f) {
-              return f.name;
-            })
-            .join(", ");
-        }
-
-        function updateSelected() {
-          var names = fileNames(input.files);
-          if (names) {
-            selected.textContent = "Valitud: " + names;
-            selected.hidden = false;
-          } else {
-            selected.textContent = "";
-            selected.hidden = true;
-          }
-        }
-
-        function mergeFiles(newFiles) {
-          if (!newFiles || !newFiles.length) return;
-          var dt = new DataTransfer();
-          var i;
-          for (i = 0; i < input.files.length; i++) {
-            dt.items.add(input.files[i]);
-          }
-          for (i = 0; i < newFiles.length; i++) {
-            dt.items.add(newFiles[i]);
-          }
-          input.files = dt.files;
-          updateSelected();
-        }
-
-        browse.addEventListener("click", function (e) {
-          e.stopPropagation();
-          input.click();
-        });
-
-        input.addEventListener("change", updateSelected);
-
-        drop.addEventListener("click", function (e) {
-          if (e.target === browse || browse.contains(e.target)) return;
-          input.click();
-        });
-
-        ["dragenter", "dragover", "dragleave", "drop"].forEach(function (ev) {
-          drop.addEventListener(ev, function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-        });
-
-        ["dragenter", "dragover"].forEach(function (ev) {
-          drop.addEventListener(ev, function () {
-            drop.classList.add("is-dragover");
-          });
-        });
-
-        ["dragleave", "drop"].forEach(function (ev) {
-          drop.addEventListener(ev, function () {
-            drop.classList.remove("is-dragover");
-          });
-        });
-
-        drop.addEventListener("drop", function (e) {
-          mergeFiles(e.dataTransfer.files);
-        });
-
-        form.addEventListener("reset", function () {
-          window.setTimeout(updateSelected, 0);
-        });
-      })();
     </script>
   </body>
 </html>
