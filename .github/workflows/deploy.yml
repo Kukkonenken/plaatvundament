@@ -1,4 +1,4 @@
-name: Deploy to Zone via FTP
+name: Deploy to Zone
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
       - name: 📂 Sync files to Zone
@@ -21,4 +21,4 @@ jobs:
           server-dir: ./
           protocol: ftp
           port: 21
-          ftp-force-pasv: true # <--- SEE RIDA ON VÄGA OLULINE
+          timeout: 60000
