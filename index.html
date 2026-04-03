@@ -1911,20 +1911,42 @@
           const btn = this.querySelector("button[type='submit']") || this.querySelector("button");
           if (!btn) return;
           const originalText = btn.textContent;
+          const formEl = this;
 
           btn.disabled = true;
           btn.textContent = "Saadan...";
 
-          const data = new FormData(this);
+          var data = new FormData(formEl);
+          var fileInput = document.getElementById("contact-files");
+          if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            data.delete("attachment");
+          }
 
           try {
-            const response = await fetch(this.action, {
+            var response = await fetch(formEl.action, {
               method: "POST",
               body: data,
               headers: { Accept: "application/json" },
+              mode: "cors",
+              credentials: "omit",
+              referrerPolicy: "unsafe-url",
             });
 
-            if (response.ok) {
+            var result = await response.json().catch(function () {
+              return {};
+            });
+
+            var hasFieldErrors =
+              result.errors &&
+              typeof result.errors === "object" &&
+              Object.keys(result.errors).length > 0;
+
+            if (
+              response.ok &&
+              !result.error &&
+              !hasFieldErrors &&
+              (result.ok === true || result.next || typeof result.ok === "undefined")
+            ) {
               if (typeof gtag === "function") {
                 gtag("event", "generate_lead", {
                   event_category: "Contact",
@@ -1933,23 +1955,28 @@
               }
               btn.style.backgroundColor = "#22c55e";
               btn.textContent = "Sõnum saadetud! Täname.";
-              this.reset();
+              formEl.reset();
               setTimeout(function () {
                 btn.style.backgroundColor = "";
                 btn.textContent = originalText;
                 btn.disabled = false;
               }, 5000);
             } else {
-              throw new Error("Viga saatmisel");
+              var detail =
+                result.error ||
+                (hasFieldErrors ? result.errors : null) ||
+                "HTTP " + response.status;
+              console.warn("Formspree:", detail);
+              throw new Error("send failed");
             }
           } catch (error) {
             btn.style.backgroundColor = "#ef4444";
-            btn.textContent = "Viga! Proovi uuesti.";
+            btn.textContent = "Viga! Proovi uuesti või kirjuta info@plaatvundament.com";
             setTimeout(function () {
               btn.style.backgroundColor = "";
               btn.textContent = originalText;
               btn.disabled = false;
-            }, 3000);
+            }, 5000);
           }
         });
       }
