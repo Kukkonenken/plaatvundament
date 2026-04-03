@@ -1207,13 +1207,18 @@
     <header class="site-header" role="banner">
       <div class="wrap header-inner">
         <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
-          <img
-            class="brand-logo"
-            src="logo.png"
-            width="300"
-            height="60"
-            alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
-          />
+          <picture>
+            <source type="image/webp" srcset="logo.webp" />
+            <img
+              class="brand-logo"
+              src="logo.png"
+              width="300"
+              height="60"
+              alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
         </a>
 
         <nav class="primary-nav" id="site-nav" aria-label="Põhinavigatsioon">
@@ -1553,13 +1558,18 @@
       <div class="wrap footer-grid">
         <div class="footer-brand">
           <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
-            <img
-              class="brand-logo"
-              src="logo.png"
-              width="300"
-              height="60"
-              alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
-            />
+            <picture>
+              <source type="image/webp" srcset="logo.webp" />
+              <img
+                class="brand-logo"
+                src="logo.png"
+                width="300"
+                height="60"
+                alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </a>
           <p>
             Betooni- ja vundamendispetsialistid, kes teostavad plaatvundamente, kvaliteetset
@@ -1826,14 +1836,23 @@
 
         images.forEach(function (img) {
           var altText = img.alt != null && img.alt !== "" ? img.alt : img.cap;
+          var webpSrc = img.src.replace(/\.(jpe?g|png|gif)$/i, ".webp");
+          var esc = function (s) {
+            return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+          };
           var slide = document.createElement("div");
           slide.className = "swiper-slide";
           slide.innerHTML =
-            "<figure><img src=\"" +
-            img.src +
-            "\" alt=\"" +
-            altText.replace(/"/g, "&quot;") +
-            "\" width=\"800\" height=\"600\" loading=\"lazy\" decoding=\"async\"><figcaption>" +
+            "<figure><picture>" +
+            '<source type="image/webp" srcset="' +
+            esc(webpSrc) +
+            '" />' +
+            '<img src="' +
+            esc(img.src) +
+            '" alt="' +
+            esc(altText) +
+            '" width="800" height="600" loading="lazy" decoding="async" />' +
+            "</picture><figcaption>" +
             img.cap.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
             "</figcaption></figure>";
           wrapper.appendChild(slide);
