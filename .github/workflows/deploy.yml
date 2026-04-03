@@ -3,20 +3,23 @@ name: Deploy to Zone via FTP
 on:
   push:
     branches:
-      - main # See käivitab saatmise siis, kui teed "push" main branchi
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 📂 Sync files to Zone
+      - name: Deploy to Zone.ee via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Kuna su Zone FTP kasutaja on juba suunatud www kausta, siis kasutame juurkataloogi
+          protocol: ftp
+          port: 21
           server-dir: ./
+          # Pikem ootus suurte failide / aeglase ühenduse korral (ms)
+          timeout: 600000
