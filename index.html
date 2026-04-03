@@ -60,7 +60,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
     />
     <link
       rel="stylesheet"
@@ -858,6 +858,11 @@
         resize: vertical;
       }
 
+      .form-row input[type="file"] {
+        min-height: auto;
+        padding: 0.55rem 0.5rem;
+      }
+
       .form-hint {
         font-size: 0.8rem;
         margin-top: 0.35rem;
@@ -867,6 +872,10 @@
       .contact-form > .form-hint {
         margin: 0 0 1rem;
         color: #b8c0cc;
+      }
+
+      .contact-form-intro {
+        line-height: 1.45;
       }
 
       .hero-card-note {
@@ -1556,35 +1565,53 @@
           <form
             id="contact-form"
             class="contact-form"
-            action="https://formspree.io/f/meeprjgw"
-            method="POST"
+            action="https://www.plaatvundament.com/contact.php"
+            method="post"
+            enctype="multipart/form-data"
             aria-label="Kirjuta meile"
           >
-            <input type="hidden" name="_language" value="et" />
+            <input type="hidden" name="to" value="info@plaatvundament.com" />
+            <input type="hidden" name="subject" value="Paring kodulehelt" />
             <input
               type="hidden"
-              name="_subject"
-              value="Uus päring veebilehelt Plaatvundament.com"
+              name="success_url"
+              value="https://plaatvundament.com/aitah.html"
             />
+
+            <p id="contact-form-desc" class="form-hint contact-form-intro">
+              Tärniga märgitud väljad on kohustuslikud. Pärast saatmist suuname tänulehele.
+            </p>
 
             <div class="form-row">
               <label for="contact-name">Nimi <span aria-hidden="true">*</span></label>
-              <input id="contact-name" name="Nimi" type="text" required />
+              <input id="contact-name" name="name" type="text" required autocomplete="name" />
             </div>
 
             <div class="form-row">
               <label for="contact-email">E-post <span aria-hidden="true">*</span></label>
-              <input id="contact-email" name="email" type="email" required />
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                inputmode="email"
+              />
             </div>
 
             <div class="form-row">
-              <label for="contact-phone">Telefon</label>
-              <input id="contact-phone" name="Telefon" type="tel" />
+              <label for="contact-file">Lisa projekt (PDF/JPG)</label>
+              <input id="contact-file" name="file" type="file" accept=".pdf,.jpg,.jpeg,.png,image/*" />
             </div>
 
             <div class="form-row">
               <label for="contact-message">Sõnum <span aria-hidden="true">*</span></label>
-              <textarea id="contact-message" name="Sõnum" required></textarea>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                aria-describedby="contact-form-desc"
+              ></textarea>
             </div>
 
             <div class="form-actions">
@@ -1802,79 +1829,6 @@
         update();
       })();
 
-      // --- Kontaktivormi saatmine (Formspree AJAX) ---
-      const contactForm = document.getElementById("contact-form");
-      if (contactForm) {
-        contactForm.addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const btn = this.querySelector("button[type='submit']") || this.querySelector("button");
-          if (!btn) return;
-          const originalText = btn.textContent;
-          const formEl = this;
-
-          btn.disabled = true;
-          btn.textContent = "Saadan...";
-
-          var data = new FormData(formEl);
-
-          try {
-            var response = await fetch(formEl.action, {
-              method: "POST",
-              body: data,
-              headers: { Accept: "application/json" },
-              mode: "cors",
-              credentials: "omit",
-              referrerPolicy: "unsafe-url",
-            });
-
-            var result = await response.json().catch(function () {
-              return {};
-            });
-
-            var hasFieldErrors =
-              result.errors &&
-              typeof result.errors === "object" &&
-              Object.keys(result.errors).length > 0;
-
-            if (
-              response.ok &&
-              !result.error &&
-              !hasFieldErrors &&
-              (result.ok === true || result.next || typeof result.ok === "undefined")
-            ) {
-              if (typeof gtag === "function") {
-                gtag("event", "generate_lead", {
-                  event_category: "Contact",
-                  event_label: "Plaatvundament Inquiry",
-                });
-              }
-              btn.style.backgroundColor = "#22c55e";
-              btn.textContent = "Sõnum saadetud! Täname.";
-              formEl.reset();
-              setTimeout(function () {
-                btn.style.backgroundColor = "";
-                btn.textContent = originalText;
-                btn.disabled = false;
-              }, 5000);
-            } else {
-              var detail =
-                result.error ||
-                (hasFieldErrors ? result.errors : null) ||
-                "HTTP " + response.status;
-              console.warn("Formspree:", detail);
-              throw new Error("send failed");
-            }
-          } catch (error) {
-            btn.style.backgroundColor = "#ef4444";
-            btn.textContent = "Viga! Proovi uuesti või kirjuta info@plaatvundament.com";
-            setTimeout(function () {
-              btn.style.backgroundColor = "";
-              btn.textContent = originalText;
-              btn.disabled = false;
-            }, 5000);
-          }
-        });
-      }
     </script>
   </body>
 </html>
