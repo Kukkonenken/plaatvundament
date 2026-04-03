@@ -1,4 +1,4 @@
-name: Deploy via SFTP
+name: Deploy to Zone
 
 on:
   push:
@@ -19,5 +19,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ./
-          protocol: sftp
-          port: 22
+          protocol: ftps # See on nüüd õige valik!
+          port: 21
