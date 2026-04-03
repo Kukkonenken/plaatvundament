@@ -898,6 +898,26 @@
         margin-top: 1.25rem;
       }
 
+      .contact-form-feedback {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .contact-form-feedback--ok {
+        background: rgba(46, 160, 67, 0.2);
+        border: 1px solid rgba(46, 160, 67, 0.45);
+        color: #c8f5d0;
+      }
+
+      .contact-form-feedback--err {
+        background: rgba(220, 53, 69, 0.15);
+        border: 1px solid rgba(220, 53, 69, 0.4);
+        color: #ffd0d4;
+      }
+
       .btn-inverse {
         background: var(--accent);
         color: #fff;
@@ -1606,6 +1626,14 @@
             <div class="form-actions">
               <button type="submit" class="btn btn-inverse">Saada päring</button>
             </div>
+
+            <p
+              id="contact-form-feedback"
+              class="contact-form-feedback"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></p>
           </form>
         </div>
       </div>
@@ -1647,6 +1675,75 @@
               btn.setAttribute("aria-expanded", "false");
             }
           });
+        });
+      })();
+
+      (function contactFormAjax() {
+        var form = document.querySelector(".contact-form");
+        var feedback = document.getElementById("contact-form-feedback");
+        var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+        if (!form || !feedback || !submitBtn) return;
+        if ((form.getAttribute("action") || "").indexOf("send.php") === -1) return;
+
+        var hideTimer = null;
+        var showFeedback = function (text, ok) {
+          feedback.textContent = text;
+          feedback.hidden = false;
+          feedback.classList.remove("contact-form-feedback--ok", "contact-form-feedback--err");
+          feedback.classList.add(ok ? "contact-form-feedback--ok" : "contact-form-feedback--err");
+          if (hideTimer) clearTimeout(hideTimer);
+          hideTimer = setTimeout(function () {
+            feedback.hidden = true;
+            feedback.textContent = "";
+            feedback.classList.remove("contact-form-feedback--ok", "contact-form-feedback--err");
+          }, 6000);
+        };
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+          submitBtn.disabled = true;
+          var fd = new FormData(form);
+          fetch(form.getAttribute("action") || "send.php", {
+            method: "POST",
+            body: fd,
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              Accept: "application/json",
+            },
+            credentials: "same-origin",
+          })
+            .then(function (res) {
+              return res.json().then(
+                function (data) {
+                  return { res: res, data: data };
+                },
+                function () {
+                  return { res: res, data: null };
+                }
+              );
+            })
+            .then(function (o) {
+              if (o.res.ok && o.data && o.data.ok === true) {
+                showFeedback("Aitäh! Sinu sõnum on saadetud.", true);
+                form.reset();
+              } else {
+                var msg =
+                  o.data && o.data.error
+                    ? o.data.error
+                    : "Saatmine ebaõnnestus. Palun proovi uuesti.";
+                showFeedback(msg, false);
+              }
+            })
+            .catch(function () {
+              showFeedback("Võrgu viga. Palun proovi uuesti.", false);
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+            });
         });
       })();
 
