@@ -1676,70 +1676,40 @@
         var submitBtn = document.getElementById("contact-form-submit");
         if (!form || !msgEl || !submitBtn) return;
 
+        // Kasutame HTTP-d, kuna api alamdomeenil pole tõenäoliselt veel SSL-i
         var endpoint = "http://api.plaatvundament.com/kontakti-vorm.php";
-
-        function setMessage(text, kind) {
-          msgEl.textContent = text;
-          msgEl.hidden = false;
-          msgEl.classList.remove("contact-form-message--success", "contact-form-message--error");
-          if (kind === "success") {
-            msgEl.classList.add("contact-form-message--success");
-          } else if (kind === "error") {
-            msgEl.classList.add("contact-form-message--error");
-          }
-        }
-
-        function clearMessage() {
-          msgEl.textContent = "";
-          msgEl.hidden = true;
-          msgEl.classList.remove("contact-form-message--success", "contact-form-message--error");
-        }
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
-          if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-          }
 
-          var nimi = form.querySelector('[name="nimi"]').value.trim();
-          var email = form.querySelector('[name="email"]').value.trim();
-          var sonum = form.querySelector('[name="sonum"]').value.trim();
-
-          clearMessage();
+          msgEl.textContent = "Saadan...";
+          msgEl.hidden = false;
+          msgEl.classList.remove("contact-form-message--success", "contact-form-message--error");
           submitBtn.disabled = true;
 
-          var payload = JSON.stringify({
-            nimi: nimi,
-            email: email,
-            sonum: sonum,
-          });
+          // Kasutame FormData-t, see on PHP-le vastuvõetavam
+          var formData = new FormData(form);
 
           fetch(endpoint, {
             method: "POST",
-            mode: "cors",
-            credentials: "omit",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json, text/plain, */*",
-            },
-            body: payload,
+            mode: "cors", // Oluline!
+            body: formData,
           })
             .then(function (res) {
-              if (!res.ok) {
-                throw new Error("HTTP " + res.status);
-              }
+              if (!res.ok) throw new Error("Serveri viga: " + res.status);
               return res.text();
             })
-            .then(function () {
-              setMessage("Sõnum saadetud!", "success");
+            .then(function (data) {
+              msgEl.textContent = "Sõnum edukalt saadetud!";
+              msgEl.classList.remove("contact-form-message--error");
+              msgEl.classList.add("contact-form-message--success");
               form.reset();
             })
-            .catch(function () {
-              setMessage(
-                "Saatmine ebaõnnestus. Palun proovi uuesti või võta meiega telefonitsi ühendust.",
-                "error"
-              );
+            .catch(function (err) {
+              console.error("Vormi viga:", err);
+              msgEl.textContent = "Viga saatmisel. Proovi uuesti või helista meile.";
+              msgEl.classList.remove("contact-form-message--success");
+              msgEl.classList.add("contact-form-message--error");
             })
             .finally(function () {
               submitBtn.disabled = false;
