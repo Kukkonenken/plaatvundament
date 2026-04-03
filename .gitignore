@@ -1,3 +1,5 @@
 # SSH võtmed (ära commiti privaatvõtit)
 id_rsa_zone
 id_rsa_zone.pub
+id_rsa_zone_final
+id_rsa_zone_final.pub
