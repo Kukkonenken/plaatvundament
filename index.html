@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="et">
   <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B4ZB8XZWPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-B4ZB8XZWPF");
+    </script>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -43,7 +53,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
     />
     <style>
       :root {
@@ -1955,6 +1965,12 @@
             });
 
             if (response.ok) {
+              if (typeof gtag === "function") {
+                gtag("event", "generate_lead", {
+                  event_category: "Contact",
+                  event_label: "Plaatvundament Inquiry",
+                });
+              }
               btn.style.backgroundColor = "#22c55e";
               btn.textContent = "Sõnum saadetud! Täname.";
               this.reset();
