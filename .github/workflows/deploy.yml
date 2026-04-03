@@ -12,14 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Zone.ee via FTP
+      - name: 📂 Sync files to Zone
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./
           protocol: ftp
           port: 21
-          server-dir: ./
-          # Pikem ootus suurte failide / aeglase ühenduse korral (ms)
-          timeout: 600000
+          ftp-force-pasv: true # <--- SEE RIDA ON VÄGA OLULINE
