@@ -1,0 +1,22 @@
+name: Deploy to Zone via FTP
+
+on:
+  push:
+    branches:
+      - main # See käivitab saatmise siis, kui teed "push" main branchi
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files to Zone
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Kuna su Zone FTP kasutaja on juba suunatud www kausta, siis kasutame juurkataloogi
+          server-dir: ./
