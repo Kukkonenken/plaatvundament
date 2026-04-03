@@ -1597,33 +1597,28 @@
             aria-labelledby="contact-form-heading"
           >
             <input type="hidden" name="_subject" value="Uus päring: Plaatvundament.com" />
-            <div class="contact-honeypot-wrap" aria-hidden="true">
-              <label for="contact-gotcha">Ära seda välja täida</label>
-              <input
-                id="contact-gotcha"
-                name="_gotcha"
-                type="text"
-                tabindex="-1"
-                autocomplete="off"
-                value=""
-              />
-            </div>
+
             <h2 id="contact-form-heading">Kirjuta meile</h2>
-            <p id="contact-form-desc" class="form-hint">
-              Tärniga märgitud väljad on kohustuslikud.
+            <p
+              id="contact-form-desc"
+              class="form-hint"
+              style="margin: 0 0 1rem; color: #b8c0cc"
+            >
+              Tärniga märgitud väljad on kohustuslikud. Vastame tööpäevadel ühe ööpäeva jooksul.
             </p>
+
             <div class="form-row">
               <label for="contact-name">Nimi <span aria-hidden="true">*</span></label>
               <input
                 id="contact-name"
-                name="nimi"
+                name="name"
                 type="text"
                 autocomplete="name"
-                maxlength="120"
                 required
                 aria-required="true"
               />
             </div>
+
             <div class="form-row">
               <label for="contact-email">E-post <span aria-hidden="true">*</span></label>
               <input
@@ -1631,52 +1626,47 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                maxlength="254"
                 required
                 aria-required="true"
                 inputmode="email"
               />
             </div>
+
             <div class="form-row">
               <label for="contact-phone">Telefon</label>
               <input
                 id="contact-phone"
-                name="telefon"
+                name="phone"
                 type="tel"
                 autocomplete="tel"
                 inputmode="tel"
-                maxlength="40"
                 placeholder="+372"
               />
             </div>
+
             <div class="form-row">
-              <label for="contact-projekti-tyyp">Projekti tüüp <span aria-hidden="true">*</span></label>
-              <select
-                id="contact-projekti-tyyp"
-                name="projekti_tyyp"
-                required
-                aria-required="true"
-              >
-                <option value="" disabled selected>Vali projekti tüüp</option>
-                <option value="eramaja">Eramaja / suvila</option>
-                <option value="mitme-pere">Mitmepereelamu</option>
-                <option value="toostushoone">Tööstus- või ärihoone</option>
-                <option value="renoveerimine">Renoveerimine / laiendus</option>
-                <option value="muu">Muu</option>
+              <label for="contact-project">Projekti tüüp</label>
+              <select id="contact-project" name="project_type">
+                <option value="">Vali tüüp</option>
+                <option value="residential">Eramu plaatvundament</option>
+                <option value="commercial">Ärihoone betoonplaat</option>
+                <option value="geothermal">Maakütte paigaldus</option>
+                <option value="other">Muu</option>
               </select>
             </div>
+
             <div class="form-row">
               <label for="contact-message">Sõnum <span aria-hidden="true">*</span></label>
               <textarea
                 id="contact-message"
-                name="sonum"
-                maxlength="8000"
+                name="message"
                 required
                 aria-required="true"
                 aria-describedby="contact-form-desc"
                 placeholder="Kirjuta siia objekti asukoht, pindala ja soovid..."
               ></textarea>
             </div>
+
             <div class="form-actions">
               <button class="btn btn-inverse" type="submit">Saada päring</button>
             </div>
