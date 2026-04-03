@@ -1,7 +1,7 @@
 <?php
 /**
  * Zone virtuaalserverisse üleslaaditav näidis (kui ei kasuta contact.php).
- * Vormi väljad: name, email, message (vt index.html).
+ * Vormi väljad: name, email, message (index.html → action="send.php").
  */
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
@@ -22,7 +22,7 @@ $headers .= "Reply-To: " . ($email !== "" ? $email : "no-reply@plaatvundament.co
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 if (mail($to, $subject, $body, $headers)) {
-    header("Location: https://plaatvundament.com/aitah.html");
+    header("Location: aitah.html");
     exit;
 }
 
