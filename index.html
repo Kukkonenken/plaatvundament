@@ -60,7 +60,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://api.plaatvundament.com https://api.plaatvundament.com https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action http://api.plaatvundament.com https://api.plaatvundament.com https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.plaatvundament.com https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://api.plaatvundament.com https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
     />
     <link
       rel="stylesheet"
@@ -1676,7 +1676,7 @@
         var submitBtn = document.getElementById("contact-form-submit");
         if (!form || !msgEl || !submitBtn) return;
 
-        var endpoint = "http://api.plaatvundament.com/kontakti-vorm.php";
+        var endpoint = "https://api.plaatvundament.com/kontakti-vorm.php";
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
@@ -1691,9 +1691,9 @@
           msgEl.classList.remove("contact-form-message--success", "contact-form-message--error");
           submitBtn.disabled = true;
 
-          // FormData väljad → URLSearchParams (application/x-www-form-urlencoded), PHP $_POST
           var formData = new FormData(form);
           var body = new URLSearchParams(formData);
+          console.log("Kontaktvorm: POST", endpoint, body.toString());
 
           fetch(endpoint, {
             method: "POST",
@@ -1706,10 +1706,18 @@
             body: body.toString(),
           })
             .then(function (res) {
+              console.log(
+                "Kontaktvorm: vastus status",
+                res.status,
+                res.statusText,
+                "URL:",
+                res.url
+              );
               if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
               return res.text();
             })
-            .then(function () {
+            .then(function (data) {
+              console.log("Kontaktvorm: serveri vastuse keha:", data);
               msgEl.textContent = "Sõnum edukalt saadetud!";
               msgEl.classList.remove("contact-form-message--error");
               msgEl.classList.add("contact-form-message--success");
