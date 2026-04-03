@@ -1562,6 +1562,7 @@
             class="contact-form"
             action="send.php"
             method="post"
+            enctype="multipart/form-data"
             aria-label="Kirjuta meile"
           >
             <div class="form-row">
@@ -1590,6 +1591,16 @@
             <div class="form-row">
               <label for="kontakt-sonum">Sõnum *</label>
               <textarea id="kontakt-sonum" name="message" required></textarea>
+            </div>
+
+            <div class="form-row">
+              <label for="kontakt-fail">Lisa joonis või dokument (valikuline, max 5 MB)</label>
+              <input
+                type="file"
+                id="kontakt-fail"
+                name="attachment"
+                accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,application/pdf,image/*"
+              />
             </div>
 
             <div class="form-actions">
