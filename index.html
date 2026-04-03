@@ -60,7 +60,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://api.plaatvundament.com https://api.plaatvundament.com https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://api.plaatvundament.com https://api.plaatvundament.com https://plaatvundament.com https://www.plaatvundament.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action http://api.plaatvundament.com https://api.plaatvundament.com https://www.plaatvundament.com https://plaatvundament.com; upgrade-insecure-requests"
     />
     <link
       rel="stylesheet"
@@ -1676,37 +1676,52 @@
         var submitBtn = document.getElementById("contact-form-submit");
         if (!form || !msgEl || !submitBtn) return;
 
-        // Kasutame HTTP-d, kuna api alamdomeenil pole tõenäoliselt veel SSL-i
         var endpoint = "http://api.plaatvundament.com/kontakti-vorm.php";
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
 
           msgEl.textContent = "Saadan...";
           msgEl.hidden = false;
           msgEl.classList.remove("contact-form-message--success", "contact-form-message--error");
           submitBtn.disabled = true;
 
-          // Kasutame FormData-t, see on PHP-le vastuvõetavam
+          // FormData väljad → URLSearchParams (application/x-www-form-urlencoded), PHP $_POST
           var formData = new FormData(form);
+          var body = new URLSearchParams(formData);
 
           fetch(endpoint, {
             method: "POST",
-            mode: "cors", // Oluline!
-            body: formData,
+            mode: "cors",
+            credentials: "omit",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json, text/plain, */*",
+            },
+            body: body.toString(),
           })
             .then(function (res) {
-              if (!res.ok) throw new Error("Serveri viga: " + res.status);
+              if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
               return res.text();
             })
-            .then(function (data) {
+            .then(function () {
               msgEl.textContent = "Sõnum edukalt saadetud!";
               msgEl.classList.remove("contact-form-message--error");
               msgEl.classList.add("contact-form-message--success");
               form.reset();
             })
             .catch(function (err) {
-              console.error("Vormi viga:", err);
+              console.error("Kontaktvorm fetch viga:", err);
+              console.error(
+                err && err.name,
+                err && err.message,
+                err && err.stack ? err.stack : "(stack puudub)"
+              );
               msgEl.textContent = "Viga saatmisel. Proovi uuesti või helista meile.";
               msgEl.classList.remove("contact-form-message--success");
               msgEl.classList.add("contact-form-message--error");
