@@ -60,7 +60,11 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <style>
       :root {
@@ -1050,44 +1054,26 @@
         transform: scale(0.96);
       }
 
-      /* --- Portfoolio slider --- */
-      .slider-container {
+      /* --- Portfoolio Swiper --- */
+      .slider-container.portfolio-swiper-wrap {
         position: relative;
         max-width: 54rem;
         margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .portfolio-swiper.swiper {
+        padding-bottom: 2rem;
         overflow: hidden;
-        padding: 0 1rem 3rem;
       }
 
-      .slider-track {
-        display: flex;
+      .portfolio-swiper .swiper-pagination {
+        display: none !important;
+      }
+
+      .portfolio-swiper .swiper-slide figure {
         margin: 0;
-        padding: 0;
-        list-style: none;
-        transition: transform 0.4s ease-in-out;
-        will-change: transform;
-      }
-
-      .slider-slide {
-        flex: 0 0 50%;
-        padding: 0 0.625rem;
-        box-sizing: border-box;
-        opacity: 0.5;
-        transition: opacity 0.3s ease;
-      }
-
-      .slider-slide.active {
-        opacity: 1;
-      }
-
-      @media (max-width: 600px) {
-        .slider-slide {
-          flex: 0 0 100%;
-        }
-      }
-
-      .slider-slide figure {
-        margin: 0;
+        height: 100%;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -1095,7 +1081,7 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
 
-      .slider-slide img {
+      .portfolio-swiper .swiper-slide img {
         width: 100%;
         height: auto;
         aspect-ratio: 4 / 3;
@@ -1103,99 +1089,49 @@
         display: block;
       }
 
-      .slider-slide figcaption {
+      .portfolio-swiper .swiper-slide figcaption {
         padding: 0.75rem 1rem;
         font-size: 0.88rem;
         color: var(--muted);
         font-weight: 500;
       }
 
-      .slider-nav {
-        position: absolute;
-        top: calc(50% - 1.375rem);
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid var(--border);
-        color: var(--text);
+      .portfolio-swiper .swiper-button-prev,
+      .portfolio-swiper .swiper-button-next {
         width: 2.75rem;
         height: 2.75rem;
+        margin-top: 0;
+        top: calc(50% - 2.5rem);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--border);
         border-radius: 50%;
-        font-size: 1.25rem;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         backdrop-filter: blur(4px);
         touch-action: manipulation;
       }
 
-      .slider-nav:hover:not(:disabled) {
+      .portfolio-swiper .swiper-button-prev::after,
+      .portfolio-swiper .swiper-button-next::after {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .portfolio-swiper .swiper-button-prev:hover,
+      .portfolio-swiper .swiper-button-next:hover {
         background: var(--surface);
         border-color: var(--accent);
         color: var(--accent);
-        box-shadow: var(--shadow);
       }
 
-      .slider-nav:disabled {
-        cursor: not-allowed;
-      }
-
-      .slider-nav.prev {
-        left: 0;
-      }
-
-      .slider-nav.next {
-        right: 0;
-      }
-
-      .slider-dots {
-        position: absolute;
-        bottom: 0.75rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-        z-index: 5;
-        max-width: 100%;
-        padding: 0 2.5rem;
-      }
-
-      .slider-dot {
-        flex-shrink: 0;
-        min-width: 2.75rem;
-        min-height: 2.75rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        touch-action: manipulation;
-      }
-
-      .slider-dot::before {
-        content: "";
-        width: 0.625rem;
-        height: 0.625rem;
-        border-radius: 50%;
-        background: var(--border);
-        transition: background 0.2s ease;
-      }
-
-      .slider-dot.active::before {
-        background: var(--accent);
+      .portfolio-swiper .swiper-button-disabled {
+        opacity: 0.35;
       }
 
       @media (max-width: 600px) {
-        .slider-container {
+        .slider-container.portfolio-swiper-wrap {
           padding-left: max(0.5rem, env(safe-area-inset-left, 0));
           padding-right: max(0.5rem, env(safe-area-inset-right, 0));
-          padding-bottom: max(3.25rem, calc(2.5rem + env(safe-area-inset-bottom, 0)));
         }
       }
 
@@ -1223,7 +1159,7 @@
           max-width: 58ch;
         }
 
-        .slider-container {
+        .slider-container.portfolio-swiper-wrap {
           padding-left: 1.25rem;
           padding-right: 1.25rem;
         }
@@ -1242,7 +1178,7 @@
           scroll-behavior: auto;
         }
 
-        .slider-track,
+        .swiper,
         .primary-nav,
         .service-card,
         .btn {
@@ -1496,15 +1432,26 @@
           </header>
 
           <div
-            class="slider-container"
+            class="slider-container portfolio-swiper-wrap"
             role="region"
             aria-roledescription="karussell"
             aria-label="Tööde galerii karussell"
           >
-            <button type="button" class="slider-nav prev" aria-label="Eelmine slaid">‹</button>
-            <ul class="slider-track" id="slider-track"></ul>
-            <button type="button" class="slider-nav next" aria-label="Järgmine slaid">›</button>
-            <div class="slider-dots" id="slider-dots"></div>
+            <div class="swiper portfolio-swiper">
+              <div class="swiper-wrapper" id="portfolio-swiper-wrapper"></div>
+              <div
+                class="swiper-button-prev"
+                aria-label="Eelmine slaid"
+                role="button"
+                tabindex="0"
+              ></div>
+              <div
+                class="swiper-button-next"
+                aria-label="Järgmine slaid"
+                role="button"
+                tabindex="0"
+              ></div>
+            </div>
           </div>
         </div>
       </section>
@@ -1766,6 +1713,7 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1787,12 +1735,9 @@
         });
       })();
 
-      (function gallerySlider() {
-        var track = document.getElementById("slider-track");
-        var dotsContainer = document.getElementById("slider-dots");
-        var prevBtn = document.querySelector(".slider-nav.prev");
-        var nextBtn = document.querySelector(".slider-nav.next");
-        if (!track || !dotsContainer || !prevBtn || !nextBtn) return;
+      (function portfolioSwiper() {
+        var wrapper = document.getElementById("portfolio-swiper-wrapper");
+        if (!wrapper || typeof Swiper === "undefined") return;
 
         var images = [
           {
@@ -1867,95 +1812,46 @@
           },
         ];
 
-        var currentIndex = 0;
-        var slidesPerPage = window.innerWidth > 600 ? 2 : 1;
-
-        function getSlidesPerPage() {
-          return window.innerWidth > 600 ? 2 : 1;
-        }
-
-        function init() {
-          track.innerHTML = "";
-          dotsContainer.innerHTML = "";
-          slidesPerPage = getSlidesPerPage();
-
-          images.forEach(function (img, i) {
-            var altText = img.alt != null && img.alt !== "" ? img.alt : img.cap;
-            var li = document.createElement("li");
-            li.className = "slider-slide";
-            li.setAttribute("role", "listitem");
-            li.innerHTML =
-              "<figure><img src=\"" +
-              img.src +
-              "\" alt=\"" +
-              altText.replace(/"/g, "&quot;") +
-              "\" width=\"800\" height=\"600\" loading=\"lazy\" decoding=\"async\"><figcaption>" +
-              img.cap.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
-              "</figcaption></figure>";
-            track.appendChild(li);
-
-            var dot = document.createElement("button");
-            dot.type = "button";
-            dot.className = "slider-dot";
-            dot.setAttribute("aria-label", "Slaid " + (i + 1));
-            dot.addEventListener("click", function () {
-              currentIndex = i;
-              update();
-            });
-            dotsContainer.appendChild(dot);
-          });
-          update();
-          requestAnimationFrame(function () {
-            requestAnimationFrame(update);
-          });
-        }
-
-        function update() {
-          slidesPerPage = getSlidesPerPage();
-          var max = Math.max(0, images.length - slidesPerPage);
-          if (currentIndex > max) currentIndex = max;
-          if (currentIndex < 0) currentIndex = 0;
-
-          var slides = track.querySelectorAll(".slider-slide");
-          if (!slides.length) return;
-          var slideWidth = slides[0].offsetWidth;
-          track.style.transform = "translateX(" + String(-currentIndex * slideWidth) + "px)";
-
-          dotsContainer.querySelectorAll(".slider-dot").forEach(function (d, i) {
-            d.classList.toggle("active", i === currentIndex);
-          });
-          slides.forEach(function (s, i) {
-            s.classList.toggle("active", i >= currentIndex && i < currentIndex + slidesPerPage);
-          });
-
-          prevBtn.disabled = currentIndex === 0;
-          nextBtn.disabled = currentIndex >= max;
-          prevBtn.style.opacity = prevBtn.disabled ? "0.35" : "1";
-          nextBtn.style.opacity = nextBtn.disabled ? "0.35" : "1";
-        }
-
-        nextBtn.addEventListener("click", function () {
-          currentIndex += slidesPerPage;
-          update();
-        });
-        prevBtn.addEventListener("click", function () {
-          currentIndex -= slidesPerPage;
-          update();
+        images.forEach(function (img) {
+          var altText = img.alt != null && img.alt !== "" ? img.alt : img.cap;
+          var slide = document.createElement("div");
+          slide.className = "swiper-slide";
+          slide.innerHTML =
+            "<figure><img src=\"" +
+            img.src +
+            "\" alt=\"" +
+            altText.replace(/"/g, "&quot;") +
+            "\" width=\"800\" height=\"600\" loading=\"lazy\" decoding=\"async\"><figcaption>" +
+            img.cap.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
+            "</figcaption></figure>";
+          wrapper.appendChild(slide);
         });
 
-        var resizeTimer;
-        window.addEventListener("resize", function () {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function () {
-            init();
-          }, 150);
-        });
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        window.addEventListener("load", function () {
-          update();
+        new Swiper(".portfolio-swiper", {
+          loop: true,
+          spaceBetween: 20,
+          slidesPerView: 1,
+          autoplay: reduceMotion
+            ? false
+            : {
+                delay: 4000,
+                disableOnInteraction: false,
+              },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          breakpoints: {
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 2,
+            },
+          },
         });
-
-        init();
       })();
 
       (function calc() {
