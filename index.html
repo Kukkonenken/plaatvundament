@@ -43,7 +43,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; form-action https://formsubmit.co; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests"
     />
     <style>
       :root {
@@ -1590,38 +1590,33 @@
 
         <div>
           <form
+            id="contact-form"
             class="contact-form"
-            action="https://formsubmit.co/info@plaatvundament.com"
-            method="post"
+            action="https://formspree.io/f/meeprjgw"
+            method="POST"
             aria-labelledby="contact-form-heading"
           >
-            <input type="hidden" name="_subject" value="Päring plaatvundament.com" />
-            <input type="hidden" name="_template" value="table" />
-            <input
-              type="hidden"
-              name="_next"
-              value="https://plaatvundament.com/#contact"
-            />
-            <h2 id="contact-form-heading">Kirjuta meile</h2>
-            <p id="contact-form-desc" class="form-hint">
-              Tärniga märgitud väljad on kohustuslikud.
-            </p>
+            <input type="hidden" name="_subject" value="Uus päring: Plaatvundament.com" />
             <div class="contact-honeypot-wrap" aria-hidden="true">
-              <label for="contact-website">Ära seda välja täida</label>
+              <label for="contact-gotcha">Ära seda välja täida</label>
               <input
-                id="contact-website"
-                name="_honey"
+                id="contact-gotcha"
+                name="_gotcha"
                 type="text"
                 tabindex="-1"
                 autocomplete="off"
                 value=""
               />
             </div>
+            <h2 id="contact-form-heading">Kirjuta meile</h2>
+            <p id="contact-form-desc" class="form-hint">
+              Tärniga märgitud väljad on kohustuslikud.
+            </p>
             <div class="form-row">
               <label for="contact-name">Nimi <span aria-hidden="true">*</span></label>
               <input
                 id="contact-name"
-                name="name"
+                name="nimi"
                 type="text"
                 autocomplete="name"
                 maxlength="120"
@@ -1646,7 +1641,7 @@
               <label for="contact-phone">Telefon</label>
               <input
                 id="contact-phone"
-                name="phone"
+                name="telefon"
                 type="tel"
                 autocomplete="tel"
                 inputmode="tel"
@@ -1655,10 +1650,26 @@
               />
             </div>
             <div class="form-row">
+              <label for="contact-projekti-tyyp">Projekti tüüp <span aria-hidden="true">*</span></label>
+              <select
+                id="contact-projekti-tyyp"
+                name="projekti_tyyp"
+                required
+                aria-required="true"
+              >
+                <option value="" disabled selected>Vali projekti tüüp</option>
+                <option value="eramaja">Eramaja / suvila</option>
+                <option value="mitme-pere">Mitmepereelamu</option>
+                <option value="toostushoone">Tööstus- või ärihoone</option>
+                <option value="renoveerimine">Renoveerimine / laiendus</option>
+                <option value="muu">Muu</option>
+              </select>
+            </div>
+            <div class="form-row">
               <label for="contact-message">Sõnum <span aria-hidden="true">*</span></label>
               <textarea
                 id="contact-message"
-                name="message"
+                name="sonum"
                 maxlength="8000"
                 required
                 aria-required="true"
@@ -1875,136 +1886,48 @@
         update();
       })();
 
-      var contactForm = document.querySelector(".contact-form");
+      // --- Kontaktivormi saatmine (Formspree AJAX) ---
+      const contactForm = document.getElementById("contact-form");
       if (contactForm) {
-        var contactPageLoadTs = Date.now();
-        var contactFirstInteractTs = null;
-        var CF_RATE_KEY = "pv_cf_last_ok";
-        var CF_MIN_AFTER_LOAD_MS = 1200;
-        var CF_MIN_AFTER_TOUCH_MS = 900;
-        var CF_RATE_LIMIT_MS = 45000;
-
-        contactForm.addEventListener(
-          "focusin",
-          function () {
-            if (contactFirstInteractTs === null) contactFirstInteractTs = Date.now();
-          },
-          true
-        );
-        contactForm.addEventListener(
-          "input",
-          function () {
-            if (contactFirstInteractTs === null) contactFirstInteractTs = Date.now();
-          },
-          true
-        );
-
-        contactForm.addEventListener("submit", function (e) {
+        contactForm.addEventListener("submit", async function (e) {
           e.preventDefault();
-          var btn = this.querySelector('button[type="submit"]') || this.querySelector("button");
+          const btn = this.querySelector("button[type='submit']") || this.querySelector("button");
           if (!btn) return;
-          var formEl = this;
-          var nameEl = document.getElementById("contact-name");
-          var emailEl = document.getElementById("contact-email");
-          var phoneEl = document.getElementById("contact-phone");
-          var msgEl = document.getElementById("contact-message");
-          var honeyEl = document.getElementById("contact-website");
-          if (!nameEl || !emailEl || !msgEl) return;
-
-          var failGeneric = function () {
-            btn.style.backgroundColor = "#b91c1c";
-            btn.textContent = "Ei saanud saata — kirjuta info@plaatvundament.com";
-          };
-
-          var name = nameEl.value.trim();
-          var email = emailEl.value.trim();
-          var phone = phoneEl ? phoneEl.value.trim() : "";
-          var message = msgEl.value.trim();
-          var honey = honeyEl ? String(honeyEl.value).trim() : "";
-
-          if (honey !== "") {
-            failGeneric();
-            setTimeout(function () {
-              btn.style.backgroundColor = "";
-              btn.textContent = "Saada päring";
-            }, 3500);
-            return;
-          }
-
-          var now = Date.now();
-          if (now - contactPageLoadTs < CF_MIN_AFTER_LOAD_MS) {
-            failGeneric();
-            setTimeout(function () {
-              btn.style.backgroundColor = "";
-              btn.textContent = "Saada päring";
-            }, 3500);
-            return;
-          }
-          if (
-            contactFirstInteractTs === null ||
-            now - contactFirstInteractTs < CF_MIN_AFTER_TOUCH_MS
-          ) {
-            failGeneric();
-            setTimeout(function () {
-              btn.style.backgroundColor = "";
-              btn.textContent = "Saada päring";
-            }, 3500);
-            return;
-          }
-
-          try {
-            var lastOk = sessionStorage.getItem(CF_RATE_KEY);
-            if (lastOk && now - parseInt(lastOk, 10) < CF_RATE_LIMIT_MS) {
-              btn.style.backgroundColor = "#b91c1c";
-              btn.textContent = "Palun oodake hetk enne uue päringu saatmist.";
-              setTimeout(function () {
-                btn.style.backgroundColor = "";
-                btn.textContent = "Saada päring";
-              }, 4000);
-              return;
-            }
-          } catch (err) {}
+          const originalText = btn.textContent;
 
           btn.disabled = true;
           btn.textContent = "Saadan...";
 
-          fetch("https://formsubmit.co/ajax/info@plaatvundament.com", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              name: name,
-              email: email,
-              phone: phone,
-              message: message,
-              _honey: "",
-              _subject: "Päring plaatvundament.com",
-              _template: "table",
-              _replyto: email,
-            }),
-            credentials: "omit",
-          })
-            .then(function (res) {
-              if (!res.ok) throw new Error("send failed");
+          const data = new FormData(this);
+
+          try {
+            const response = await fetch(this.action, {
+              method: "POST",
+              body: data,
+              headers: { Accept: "application/json" },
+            });
+
+            if (response.ok) {
               btn.style.backgroundColor = "#22c55e";
-              btn.textContent = "Täname päringu eest!";
-              formEl.reset();
-              try {
-                sessionStorage.setItem(CF_RATE_KEY, String(Date.now()));
-              } catch (e2) {}
-            })
-            .catch(function () {
-              failGeneric();
-            })
-            .finally(function () {
+              btn.textContent = "Sõnum saadetud! Täname.";
+              this.reset();
               setTimeout(function () {
                 btn.style.backgroundColor = "";
-                btn.textContent = "Saada päring";
+                btn.textContent = originalText;
                 btn.disabled = false;
-              }, 4000);
-            });
+              }, 5000);
+            } else {
+              throw new Error("Viga saatmisel");
+            }
+          } catch (error) {
+            btn.style.backgroundColor = "#ef4444";
+            btn.textContent = "Viga! Proovi uuesti.";
+            setTimeout(function () {
+              btn.style.backgroundColor = "";
+              btn.textContent = originalText;
+              btn.disabled = false;
+            }, 3000);
+          }
         });
       }
     </script>
