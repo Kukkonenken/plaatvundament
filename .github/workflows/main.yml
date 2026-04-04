@@ -26,4 +26,4 @@ jobs:
 
       - name: Deploy with rsync
         run: |
-          rsync -vrm --exclude '.git*' --exclude '.github*' ./* virt140108@${{ secrets.HOST_SERVER_IP }}:/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/
+          rsync -av --delete --exclude '.git*' --exclude '.github*' ./* virt140108@${{ secrets.HOST_SERVER_IP }}:/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/

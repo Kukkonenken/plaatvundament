@@ -24,7 +24,7 @@
     />
     <meta
       property="og:image"
-      content="https://plaatvundament.com/images/plaatvundament.jpeg"
+      content="https://plaatvundament.com/images/plaatvundament.webp"
     />
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B4ZB8XZWPF"></script>
@@ -46,7 +46,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://plaatvundament.com/images/plaatvundament.jpeg"
+      content="https://plaatvundament.com/images/plaatvundament.webp"
     />
     <meta name="theme-color" content="#1a2332" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -1148,7 +1148,7 @@
         "alternateName": "Plaatvundament.com",
         "url": "https://plaatvundament.com/",
         "logo": "https://plaatvundament.com/logo.png",
-        "image": "https://plaatvundament.com/images/plaatvundament.jpeg",
+        "image": "https://plaatvundament.com/images/plaatvundament.webp",
         "description": "Spetsialiseerunud plaatvundamentide ja betoonitööde teostamisele Eestis.",
         "address": {
           "@type": "PostalAddress",
@@ -1763,72 +1763,72 @@
 
         var images = [
           {
-            src: "images/plaatvundament-pinnase-ettevalmistus.jpg",
+            src: "images/plaatvundament-pinnase-ettevalmistus.webp",
             cap: "Pinnase ettevalmistus ja väljakaeve",
             alt: "Plaatvundamendi pinnasetööd ja ekskavaatoriga väljakaeve Cenex OÜ",
           },
           {
-            src: "images/plaatvundament-valitrassid.jpg",
+            src: "images/plaatvundament-valitrassid.webp",
             cap: "Välistrasside ja kanalisatsiooni rajamine",
             alt: "Välistrasside ja kanalisatsioonitorustiku paigaldus vundamendi alla",
           },
           {
-            src: "images/plaatvundamendi-eriosad-etapid.jpg",
+            src: "images/plaatvundamendi-eriosad-etapid.webp",
             cap: "Vundamendi eriosade ettevalmistus",
             alt: "Plaatvundamendi eriosade ja kommunikatsioonide planeerimine",
           },
           {
-            src: "images/plaatvundament-kylm-vesi.jpg",
+            src: "images/plaatvundament-kylm-vesi.webp",
             cap: "Veetorustiku paigaldus soojustusse",
             alt: "Veetorustiku paigaldamine vundamendi soojustuskihi sisse",
           },
           {
-            src: "images/plaatvundament-Eriosad.jpg",
+            src: "images/plaatvundament-Eriosad.webp",
             cap: "Kommunikatsioonide lahendused",
             alt: "Ehitusaegsed kommunikatsioonid ja nende läbiviigud vundamendis",
           },
           {
-            src: "images/plaatvundament-armeerimine.jpeg",
+            src: "images/plaatvundament-armeerimine.webp",
             cap: "Vundamendi sarrustamine (armeerimine)",
             alt: "Plaatvundamendi armeerimine terasvõrguga enne valubetooni",
           },
           {
-            src: "images/plaatvundament-fiiberarmatuur.jpeg",
+            src: "images/plaatvundament-fiiberarmatuur.webp",
             cap: "Fiiberarmatuuri lisamine betooni",
             alt: "Betooni tugevdamine fiiberarmatuuriga plaatvundamendi ehitusel",
           },
           {
-            src: "images/plaatvundament-porandakyte.jpg",
+            src: "images/plaatvundament-porandakyte.webp",
             cap: "Põrandakütte torustiku paigaldus",
             alt: "Põrandaküttetorude paigaldamine plaatvundamendi sisse",
           },
           {
-            src: "images/vundament-enne-valu.jpg",
+            src: "images/vundament-enne-valu.webp",
             cap: "Objekt valmis betooni valamiseks",
             alt: "Ettevalmistatud plaatvundament enne betooni valamist",
           },
           {
-            src: "images/vundamendi-betoonivalu.jpeg",
+            src: "images/vundamendi-betoonivalu.webp",
             cap: "Värskelt valatud betoonplaat",
             alt: "Värskelt valatud plaatvundamendi betoonipind",
           },
           {
-            src: "images/vundamendi-valamine.jpg",
+            src: "images/vundamendi-valamine.webp",
             cap: "Betooni valamine pumbaga",
             alt: "Plaatvundamendi betoonivalu teostamine betoonipumbaga",
           },
           {
-            src: "images/plaatvundamendi-valu.jpeg",
+            src: "images/plaatvundamendi-valu.webp",
             cap: "Lihvitud monoliitne plaat",
             alt: "Lihvitud ja sile plaatvundamendi pind Cenex OÜ poolt",
           },
           {
-            src: "images/vundamendi-porandapind.jpg",
+            src: "images/vundamendi-porandapind.webp",
             cap: "Valmis sile põrandapind",
             alt: "Valmis ja kopterdatud plaatvundamendi põrandapind",
           },
           {
-            src: "images/plaatvundament.jpeg",
+            src: "images/plaatvundament.webp",
             cap: "Cenex OÜ plaatvundamendi lahendus",
             alt: "Valmis ehitatud plaatvundament Harjumaal Cenex OÜ",
           },
@@ -1836,23 +1836,17 @@
 
         images.forEach(function (img) {
           var altText = img.alt != null && img.alt !== "" ? img.alt : img.cap;
-          var webpSrc = img.src.replace(/\.(jpe?g|png|gif)$/i, ".webp");
           var esc = function (s) {
             return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
           };
           var slide = document.createElement("div");
           slide.className = "swiper-slide";
           slide.innerHTML =
-            "<figure><picture>" +
-            '<source type="image/webp" srcset="' +
-            esc(webpSrc) +
-            '" />' +
-            '<img src="' +
+            "<figure><img src=\"" +
             esc(img.src) +
-            '" alt="' +
+            "\" alt=\"" +
             esc(altText) +
-            '" width="800" height="600" loading="lazy" decoding="async" />' +
-            "</picture><figcaption>" +
+            "\" width=\"800\" height=\"600\" loading=\"lazy\" decoding=\"async\" /><figcaption>" +
             img.cap.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
             "</figcaption></figure>";
           wrapper.appendChild(slide);
