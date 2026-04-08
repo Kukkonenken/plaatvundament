@@ -158,7 +158,12 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(255, 255, 255, 0.92);
+        background: linear-gradient(
+          90deg,
+          rgba(196, 92, 38, 0.14) 0%,
+          rgba(255, 255, 255, 0.92) 40%,
+          rgba(255, 255, 255, 0.92) 100%
+        );
         backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--border);
         padding-left: env(safe-area-inset-left, 0);
@@ -770,7 +775,10 @@
 
       /* Footer */
       .site-footer {
-        background: var(--text);
+        background:
+          radial-gradient(900px 380px at 14% 18%, rgba(196, 92, 38, 0.22), transparent 60%),
+          radial-gradient(700px 320px at 85% 0%, rgba(255, 255, 255, 0.08), transparent 55%),
+          linear-gradient(180deg, #1a2332 0%, #121a27 100%);
         color: #c9d0dc;
         padding: clamp(3rem, 6vw, 4rem) 0 2rem;
       }
