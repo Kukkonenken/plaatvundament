@@ -244,6 +244,32 @@
         max-width: min(100%, 320px);
       }
 
+      /* Image-logo styling (restore "logo idea") */
+      .brand-logo {
+        -webkit-mask-image: radial-gradient(16px 16px at 0% 0%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 100% 0%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 0% 100%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 100% 100%, transparent 18%, #000 68%),
+          linear-gradient(#000, #000);
+        mask-image: radial-gradient(16px 16px at 0% 0%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 100% 0%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 0% 100%, transparent 18%, #000 68%),
+          radial-gradient(16px 16px at 100% 100%, transparent 18%, #000 68%),
+          linear-gradient(#000, #000);
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+      }
+
+      .brand-logo--header {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
+      }
+
+      .brand-logo--footer {
+        filter: contrast(1.12) brightness(1.06)
+          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35));
+      }
+
       /* Logo component (icon img + sharp SVG text) */
       .logo {
         --logo-glow: none;
@@ -1271,53 +1297,19 @@
 
     <header class="site-header" role="banner">
       <div class="wrap header-inner">
-        <a class="logo logo--header" href="/" aria-label="Plaatvundament.com — avaleht">
-          <img
-            class="logo__icon"
-            src="/assets/foundation-icon.png"
-            width="44"
-            height="44"
-            alt="Plaatvundamendi ikoon"
-            decoding="async"
-            fetchpriority="high"
-          />
-          <svg
-            class="logo__text"
-            viewBox="0 0 520 110"
-            role="img"
-            aria-label="PLAATVUNDAMENT.COM"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="logoCopper" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b87333" />
-                <stop offset="100%" stop-color="#8b4513" />
-              </linearGradient>
-            </defs>
-            <text
-              x="0"
-              y="74"
-              font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-              font-size="64"
-              font-weight="800"
-              letter-spacing="2.5"
-              fill="url(#logoCopper)"
-            >
-              PLAATVUNDAMENT.COM
-            </text>
-            <text
-              x="0"
-              y="102"
-              font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-              font-size="22"
-              font-weight="800"
-              letter-spacing="6"
-              fill="#c0c0c0"
-              opacity="0.95"
-            >
-              PLAATVUNDAMENT.COM
-            </text>
-          </svg>
+        <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
+          <picture>
+            <source type="image/webp" srcset="logo.webp" />
+            <img
+              class="brand-logo brand-logo--header"
+              src="logo.webp?v=f28101b"
+              width="300"
+              height="60"
+              alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
         </a>
 
         <nav class="primary-nav" id="site-nav" aria-label="Põhinavigatsioon">
@@ -1656,53 +1648,19 @@
     <footer class="site-footer" id="contact" role="contentinfo">
       <div class="wrap footer-grid">
         <div class="footer-brand">
-          <a class="logo logo--footer" href="/" aria-label="Plaatvundament.com — avaleht">
-            <img
-              class="logo__icon"
-              src="/assets/foundation-icon.png"
-              width="44"
-              height="44"
-              alt="Plaatvundamendi ikoon"
-              loading="lazy"
-              decoding="async"
-            />
-            <svg
-              class="logo__text"
-              viewBox="0 0 520 110"
-              role="img"
-              aria-label="PLAATVUNDAMENT.COM"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient id="logoCopperFooter" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#b87333" />
-                  <stop offset="100%" stop-color="#8b4513" />
-                </linearGradient>
-              </defs>
-              <text
-                x="0"
-                y="74"
-                font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-                font-size="64"
-                font-weight="800"
-                letter-spacing="2.5"
-                fill="url(#logoCopperFooter)"
-              >
-                PLAATVUNDAMENT.COM
-              </text>
-              <text
-                x="0"
-                y="102"
-                font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-                font-size="22"
-                font-weight="800"
-                letter-spacing="6"
-                fill="#c0c0c0"
-                opacity="0.95"
-              >
-                PLAATVUNDAMENT.COM
-              </text>
-            </svg>
+          <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
+            <picture>
+              <source type="image/webp" srcset="logo.webp" />
+              <img
+                class="brand-logo brand-logo--footer"
+                src="logo.webp?v=f28101b"
+                width="300"
+                height="60"
+                alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </a>
           <p>
             Betooni- ja vundamendispetsialistid, kes teostavad plaatvundamente, kvaliteetset
