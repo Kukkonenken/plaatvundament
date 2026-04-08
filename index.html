@@ -68,14 +68,14 @@
     />
     <style>
       :root {
-        /* Softer, friendlier neutrals */
-        --bg: #f7f5f2;
-        --surface: #ffffff;
+        /* Warmer, friendlier palette (copper + warm neutrals) */
+        --bg: #fbf7f2;
+        --surface: #fffdfb;
         --text: #1a2332;
         --muted: #5f6b7a;
-        --accent: #c45c26;
-        --accent-hover: #a34a1d;
-        --border: #e6e0d8;
+        --accent: #b55a2a;
+        --accent-hover: #9a4c24;
+        --border: #eadfd3;
         --focus: #2563eb;
         --radius: 12px;
         --shadow: 0 4px 24px rgba(26, 35, 50, 0.08);
@@ -100,7 +100,10 @@
         font-size: 1rem;
         line-height: 1.6;
         color: var(--text);
-        background: var(--bg);
+        background:
+          radial-gradient(1100px 520px at 10% 0%, rgba(181, 90, 42, 0.08), transparent 60%),
+          radial-gradient(900px 520px at 95% 12%, rgba(95, 107, 122, 0.06), transparent 62%),
+          linear-gradient(180deg, var(--bg) 0%, #f7f0e8 100%);
         overflow-x: clip;
       }
 
@@ -159,16 +162,7 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        /* Keep logo area neutral/light; fade to brand tones away from logo */
-        background:
-          radial-gradient(620px 260px at 150px 40px, rgba(255, 255, 255, 0.995), transparent 72%),
-          linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.92) 0%,
-            rgba(255, 255, 255, 0.92) 34%,
-            rgba(196, 92, 38, 0.18) 62%,
-            rgba(92, 102, 120, 0.14) 100%
-          );
+        background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--border);
         padding-left: env(safe-area-inset-left, 0);
@@ -553,7 +547,7 @@
       }
 
       section:nth-of-type(even) {
-        background: #fffdfb;
+        background: var(--surface);
       }
 
       /* Optional section fade without affecting text clarity */
@@ -564,8 +558,8 @@
         z-index: -1;
         pointer-events: none;
         background:
-          radial-gradient(900px 380px at 12% 18%, rgba(196, 92, 38, 0.045), transparent 62%),
-          radial-gradient(900px 420px at 88% 10%, rgba(92, 102, 120, 0.04), transparent 64%);
+          radial-gradient(900px 380px at 12% 18%, rgba(181, 90, 42, 0.06), transparent 62%),
+          radial-gradient(900px 420px at 88% 10%, rgba(95, 107, 122, 0.045), transparent 64%);
       }
 
       .section-head {
@@ -893,10 +887,10 @@
 
       /* Footer */
       .site-footer {
-        /* Light near logo, dark away */
+        /* Warm, subtle fade (text stays crisp) */
         background:
-          radial-gradient(560px 260px at 160px 110px, rgba(246, 247, 249, 0.16), transparent 70%),
-          radial-gradient(900px 420px at 18% 30%, rgba(196, 92, 38, 0.12), transparent 68%),
+          radial-gradient(900px 420px at 18% 30%, rgba(181, 90, 42, 0.14), transparent 68%),
+          radial-gradient(900px 520px at 85% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
           linear-gradient(180deg, #1a2332 0%, #121a27 100%);
         color: #c9d0dc;
         padding: clamp(3rem, 6vw, 4rem) 0 2rem;
@@ -1338,7 +1332,7 @@
             <source type="image/webp" srcset="logo.webp" />
             <img
               class="brand-logo brand-logo--header"
-              src="logo.webp?v=logo-20260408c"
+              src="logo.webp?v=logo-20260408d"
               width="340"
               height="68"
               alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
@@ -1689,7 +1683,7 @@
               <source type="image/webp" srcset="logo.webp" />
               <img
                 class="brand-logo brand-logo--footer"
-                src="logo.webp?v=logo-20260408c"
+                src="logo.webp?v=logo-20260408d"
                 width="340"
                 height="68"
                 alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
