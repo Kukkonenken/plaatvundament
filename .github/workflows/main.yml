@@ -19,11 +19,8 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: SSH keyscan — trust host
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.HOST_SERVER_IP }}" >> ~/.ssh/known_hosts
-
       - name: Deploy with rsync
         run: |
-          rsync -av --delete --exclude '.git*' --exclude '.github*' ./* virt140108@${{ secrets.HOST_SERVER_IP }}:/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/
+          rsync -av --delete --exclude '.git*' --exclude '.github*' \
+            -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
+            ./* virt140108@${{ secrets.HOST_SERVER_IP }}:/data01/virt140108/domeenid/www.plaatvundament.com/htdocs/
