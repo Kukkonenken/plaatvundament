@@ -246,15 +246,16 @@
 
       /* Image-logo styling (restore "logo idea") */
       .brand-logo {
-        -webkit-mask-image: radial-gradient(16px 16px at 0% 0%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 100% 0%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 0% 100%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 100% 100%, transparent 18%, #000 68%),
+        /* Stronger feather so white-background logos blend in */
+        -webkit-mask-image: radial-gradient(22px 22px at 0% 0%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 100% 0%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 0% 100%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 100% 100%, transparent 22%, #000 74%),
           linear-gradient(#000, #000);
-        mask-image: radial-gradient(16px 16px at 0% 0%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 100% 0%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 0% 100%, transparent 18%, #000 68%),
-          radial-gradient(16px 16px at 100% 100%, transparent 18%, #000 68%),
+        mask-image: radial-gradient(22px 22px at 0% 0%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 100% 0%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 0% 100%, transparent 22%, #000 74%),
+          radial-gradient(22px 22px at 100% 100%, transparent 22%, #000 74%),
           linear-gradient(#000, #000);
         -webkit-mask-composite: source-in;
         mask-composite: intersect;
@@ -1302,7 +1303,7 @@
             <source type="image/webp" srcset="logo.webp" />
             <img
               class="brand-logo brand-logo--header"
-              src="logo.webp?v=f28101b"
+              src="logo.webp?v=logo-20260408b"
               width="300"
               height="60"
               alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
@@ -1653,7 +1654,7 @@
               <source type="image/webp" srcset="logo.webp" />
               <img
                 class="brand-logo brand-logo--footer"
-                src="logo.webp?v=f28101b"
+                src="logo.webp?v=logo-20260408b"
                 width="300"
                 height="60"
                 alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
