@@ -164,8 +164,8 @@
           linear-gradient(
             90deg,
             rgba(255, 255, 255, 0.92) 0%,
-            rgba(255, 255, 255, 0.92) 38%,
-            rgba(196, 92, 38, 0.18) 70%,
+            rgba(255, 255, 255, 0.92) 34%,
+            rgba(196, 92, 38, 0.18) 62%,
             rgba(92, 102, 120, 0.14) 100%
           );
         backdrop-filter: blur(8px);
@@ -250,27 +250,39 @@
 
       /* Image-logo styling (restore "logo idea") */
       .brand-logo {
-        /* Stronger feather so white-background logos blend in */
-        -webkit-mask-image: radial-gradient(22px 22px at 0% 0%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 100% 0%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 0% 100%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 100% 100%, transparent 22%, #000 74%),
+        /* Feather edges to avoid hard rectangular box */
+        --logo-feather: 26px;
+        -webkit-mask-image:
+          /* side fades */
+          linear-gradient(to right, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
+          linear-gradient(to bottom, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
+          /* corner softening */
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 0%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 0%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 100%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 100%, transparent 30%, #000 78%),
           linear-gradient(#000, #000);
-        mask-image: radial-gradient(22px 22px at 0% 0%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 100% 0%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 0% 100%, transparent 22%, #000 74%),
-          radial-gradient(22px 22px at 100% 100%, transparent 22%, #000 74%),
+        mask-image:
+          linear-gradient(to right, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
+          linear-gradient(to bottom, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 0%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 0%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 100%, transparent 30%, #000 78%),
+          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 100%, transparent 30%, #000 78%),
           linear-gradient(#000, #000);
         -webkit-mask-composite: source-in;
         mask-composite: intersect;
       }
 
       .brand-logo--header {
+        --logo-feather: 22px;
         filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7))
           drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
       }
 
       .brand-logo--footer {
+        /* Dark background shows the box more; increase feather */
+        --logo-feather: 40px;
         filter: contrast(1.12) brightness(1.06)
           drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35));
       }
@@ -866,7 +878,7 @@
         /* Add a light "halo" near logo; fade to orange/grey further away */
         background:
           radial-gradient(560px 300px at 150px 96px, rgba(246, 247, 249, 0.22), transparent 74%),
-          radial-gradient(980px 420px at 20% 18%, rgba(196, 92, 38, 0.28), transparent 64%),
+          radial-gradient(980px 420px at 20% 18%, rgba(196, 92, 38, 0.32), transparent 58%),
           radial-gradient(700px 320px at 85% 0%, rgba(255, 255, 255, 0.08), transparent 55%),
           linear-gradient(180deg, #1a2332 0%, #121a27 100%);
         color: #c9d0dc;
