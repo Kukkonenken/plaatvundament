@@ -893,8 +893,11 @@
 
       /* Footer */
       .site-footer {
-        /* Uniform footer background */
-        background: #1a2332;
+        /* Light near logo, dark away */
+        background:
+          radial-gradient(560px 260px at 160px 110px, rgba(246, 247, 249, 0.16), transparent 70%),
+          radial-gradient(900px 420px at 18% 30%, rgba(196, 92, 38, 0.12), transparent 68%),
+          linear-gradient(180deg, #1a2332 0%, #121a27 100%);
         color: #c9d0dc;
         padding: clamp(3rem, 6vw, 4rem) 0 2rem;
       }
