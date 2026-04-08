@@ -227,12 +227,11 @@
         z-index: 100;
         isolation: isolate;
         background: rgba(240, 237, 230, 0.97);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid #d9c2a8;
         padding-left: env(safe-area-inset-left, 0);
         padding-right: env(safe-area-inset-right, 0);
-        box-shadow: 0 1px 0 rgba(212, 194, 168, 0.12);
       }
 
       .site-header::before {
@@ -330,13 +329,17 @@
         object-position: left center;
       }
 
+      .site-header .brand-logo {
+        height: clamp(48px, 9.5vw, 64px);
+        max-width: min(100%, 360px);
+      }
+
       .footer-brand .brand-logo {
         height: clamp(48px, 9.5vw, 64px);
         max-width: min(100%, 360px);
       }
 
-      /* Keep the logo image "original" (no mask/filter).
-         Blend is achieved via background/overlay around the logo container. */
+      /* Logo image: no mask/filter — flat, same treatment in header and footer */
       .brand-logo,
       .brand-logo--header,
       .brand-logo--footer {
@@ -347,7 +350,16 @@
         filter: none;
       }
 
-      .site-header .brand,
+      /* Header: logo sits flat on the bar (no pill, halo or extra container) */
+      .site-header .brand {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0;
+        border-radius: 0;
+        isolation: auto;
+      }
+
       .footer-brand .brand {
         position: relative;
         display: inline-flex;
@@ -357,24 +369,6 @@
         isolation: isolate;
       }
 
-      /* Warm white halo + soft shadow behind logo (header) */
-      .site-header .brand::before {
-        content: "";
-        position: absolute;
-        inset: -14px -18px;
-        border-radius: 26px;
-        background:
-          radial-gradient(200px 100px at 45% 50%, rgba(255, 255, 255, 0.98), transparent 72%),
-          radial-gradient(280px 130px at 28% 50%, rgba(255, 255, 255, 0.82), transparent 74%);
-        box-shadow:
-          0 10px 36px rgba(212, 194, 168, 0.2),
-          0 2px 12px rgba(44, 44, 44, 0.06);
-        filter: blur(0.2px);
-        z-index: -1;
-        pointer-events: none;
-      }
-
-      /* Footer logo: no special halo/gradient (uniform look) */
       .footer-brand .brand::before,
       .footer-brand .brand::after {
         content: none;
@@ -417,9 +411,8 @@
       }
 
       .logo--header {
-        --logo-glow: drop-shadow(0 0 10px rgba(255, 255, 255, 0.75))
-          drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
-        --logo-text-filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35));
+        --logo-glow: none;
+        --logo-text-filter: none;
       }
 
       .logo--footer {
