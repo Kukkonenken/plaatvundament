@@ -288,12 +288,25 @@
       .footer-brand .brand::before {
         content: "";
         position: absolute;
-        inset: -18px -22px;
-        border-radius: 30px;
+        inset: -22px -26px;
+        border-radius: 34px;
         background:
-          radial-gradient(220px 120px at 45% 52%, rgba(246, 247, 249, 0.18), transparent 72%),
-          radial-gradient(320px 160px at 30% 46%, rgba(196, 92, 38, 0.18), transparent 74%);
+          /* gentle dark bed so the logo's own white background doesn't read as a box */
+          radial-gradient(340px 180px at 48% 56%, rgba(18, 26, 39, 0.55), transparent 70%),
+          radial-gradient(240px 130px at 46% 52%, rgba(246, 247, 249, 0.22), transparent 70%),
+          radial-gradient(360px 190px at 30% 46%, rgba(196, 92, 38, 0.22), transparent 74%);
         z-index: -1;
+        pointer-events: none;
+      }
+
+      .footer-brand .brand::after {
+        content: "";
+        position: absolute;
+        inset: -26px -30px;
+        border-radius: 40px;
+        /* feather the transition into the footer background */
+        background: radial-gradient(closest-side, rgba(18, 26, 39, 0) 62%, rgba(18, 26, 39, 0.65) 100%);
+        z-index: -2;
         pointer-events: none;
       }
 
@@ -554,10 +567,24 @@
       /* Sections */
       section {
         padding: clamp(3rem, 6vw, 4.5rem) 0;
+        position: relative;
+        isolation: isolate;
       }
 
       section:nth-of-type(even) {
         background: var(--surface);
+      }
+
+      /* Optional section fade without affecting text clarity */
+      section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(900px 380px at 12% 18%, rgba(196, 92, 38, 0.06), transparent 60%),
+          radial-gradient(900px 420px at 88% 10%, rgba(92, 102, 120, 0.05), transparent 62%);
       }
 
       .section-head {
