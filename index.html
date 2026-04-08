@@ -244,6 +244,63 @@
         max-width: min(100%, 320px);
       }
 
+      /* Logo component (icon img + sharp SVG text) */
+      .logo {
+        --logo-glow: none;
+        --logo-text-filter: none;
+        --logo-mask:
+          radial-gradient(18px 18px at 0% 0%, transparent 20%, #000 70%),
+          radial-gradient(18px 18px at 100% 0%, transparent 20%, #000 70%),
+          radial-gradient(18px 18px at 0% 100%, transparent 20%, #000 70%),
+          radial-gradient(18px 18px at 100% 100%, transparent 20%, #000 70%),
+          linear-gradient(#000, #000);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        text-decoration: none;
+        color: inherit;
+        -webkit-mask-image: var(--logo-mask);
+        mask-image: var(--logo-mask);
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+      }
+
+      .logo__icon {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 auto;
+        object-fit: contain;
+        filter: var(--logo-glow);
+      }
+
+      .logo__text {
+        display: block;
+        height: 48px;
+        width: auto;
+        filter: var(--logo-text-filter);
+      }
+
+      .logo--header {
+        --logo-glow: drop-shadow(0 0 10px rgba(255, 255, 255, 0.75))
+          drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
+        --logo-text-filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35));
+      }
+
+      .logo--footer {
+        --logo-text-filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35)) contrast(1.08)
+          brightness(1.06);
+      }
+
+      @media (max-width: 420px) {
+        .logo__icon {
+          width: 38px;
+          height: 38px;
+        }
+        .logo__text {
+          height: 44px;
+        }
+      }
+
       .primary-nav ul {
         list-style: none;
         margin: 0;
@@ -1214,19 +1271,54 @@
 
     <header class="site-header" role="banner">
       <div class="wrap header-inner">
-        <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
-          <picture>
-            <source type="image/webp" srcset="logo.webp" />
-            <img
-              class="brand-logo"
-              src="logo.webp?v=f28101b"
-              width="300"
-              height="60"
-              alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
+        <a class="logo logo--header" href="/" aria-label="Plaatvundament.com — avaleht">
+          <img
+            class="logo__icon"
+            src="/assets/foundation-icon.png"
+            width="44"
+            height="44"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <svg
+            class="logo__text"
+            viewBox="0 0 520 110"
+            role="img"
+            aria-label="PLAATVUNDAMENT.COM"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="logoCopper" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#b87333" />
+                <stop offset="100%" stop-color="#8b4513" />
+              </linearGradient>
+            </defs>
+            <text
+              x="0"
+              y="74"
+              font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+              font-size="64"
+              font-weight="800"
+              letter-spacing="2.5"
+              fill="url(#logoCopper)"
+            >
+              PLAATVUNDAMENT.COM
+            </text>
+            <text
+              x="0"
+              y="102"
+              font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+              font-size="22"
+              font-weight="800"
+              letter-spacing="6"
+              fill="#c0c0c0"
+              opacity="0.95"
+            >
+              PLAATVUNDAMENT.COM
+            </text>
+          </svg>
         </a>
 
         <nav class="primary-nav" id="site-nav" aria-label="Põhinavigatsioon">
@@ -1565,19 +1657,54 @@
     <footer class="site-footer" id="contact" role="contentinfo">
       <div class="wrap footer-grid">
         <div class="footer-brand">
-          <a class="brand" href="/" aria-label="Plaatvundament.com — avaleht">
-            <picture>
-              <source type="image/webp" srcset="logo.webp" />
-              <img
-                class="brand-logo"
-                src="logo.webp?v=f28101b"
-                width="300"
-                height="60"
-                alt="Plaatvundament.com logo – plaatvundamendi ehitus, sarrustamine ja põrandakütte paigaldus"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
+          <a class="logo logo--footer" href="/" aria-label="Plaatvundament.com — avaleht">
+            <img
+              class="logo__icon"
+              src="/assets/foundation-icon.png"
+              width="44"
+              height="44"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
+            <svg
+              class="logo__text"
+              viewBox="0 0 520 110"
+              role="img"
+              aria-label="PLAATVUNDAMENT.COM"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="logoCopperFooter" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#b87333" />
+                  <stop offset="100%" stop-color="#8b4513" />
+                </linearGradient>
+              </defs>
+              <text
+                x="0"
+                y="74"
+                font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+                font-size="64"
+                font-weight="800"
+                letter-spacing="2.5"
+                fill="url(#logoCopperFooter)"
+              >
+                PLAATVUNDAMENT.COM
+              </text>
+              <text
+                x="0"
+                y="102"
+                font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+                font-size="22"
+                font-weight="800"
+                letter-spacing="6"
+                fill="#c0c0c0"
+                opacity="0.95"
+              >
+                PLAATVUNDAMENT.COM
+              </text>
+            </svg>
           </a>
           <p>
             Betooni- ja vundamendispetsialistid, kes teostavad plaatvundamente, kvaliteetset
