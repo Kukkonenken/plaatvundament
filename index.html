@@ -248,43 +248,53 @@
         max-width: min(100%, 320px);
       }
 
-      /* Image-logo styling (restore "logo idea") */
-      .brand-logo {
-        /* Feather edges to avoid hard rectangular box */
-        --logo-feather: 26px;
-        -webkit-mask-image:
-          /* side fades */
-          linear-gradient(to right, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
-          linear-gradient(to bottom, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
-          /* corner softening */
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 0%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 0%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 100%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 100%, transparent 30%, #000 78%),
-          linear-gradient(#000, #000);
-        mask-image:
-          linear-gradient(to right, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
-          linear-gradient(to bottom, transparent, #000 var(--logo-feather), #000 calc(100% - var(--logo-feather)), transparent),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 0%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 0%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 0% 100%, transparent 30%, #000 78%),
-          radial-gradient(calc(var(--logo-feather) + 6px) calc(var(--logo-feather) + 6px) at 100% 100%, transparent 30%, #000 78%),
-          linear-gradient(#000, #000);
-        -webkit-mask-composite: source-in;
-        mask-composite: intersect;
-      }
-
-      .brand-logo--header {
-        --logo-feather: 22px;
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7))
-          drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
-      }
-
+      /* Keep the logo image "original" (no mask/filter).
+         Blend is achieved via background/overlay around the logo container. */
+      .brand-logo,
+      .brand-logo--header,
       .brand-logo--footer {
-        /* Dark background shows the box more; increase feather */
-        --logo-feather: 40px;
-        filter: contrast(1.12) brightness(1.06)
-          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.35));
+        -webkit-mask-image: none;
+        mask-image: none;
+        -webkit-mask-composite: initial;
+        mask-composite: initial;
+        filter: none;
+      }
+
+      .site-header .brand,
+      .footer-brand .brand {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.35rem;
+        border-radius: 16px;
+        isolation: isolate;
+      }
+
+      /* Light halo + feathered edges behind logo (header) */
+      .site-header .brand::before {
+        content: "";
+        position: absolute;
+        inset: -14px -18px;
+        border-radius: 26px;
+        background:
+          radial-gradient(180px 90px at 45% 50%, rgba(255, 255, 255, 0.95), transparent 70%),
+          radial-gradient(260px 120px at 30% 50%, rgba(255, 255, 255, 0.7), transparent 72%);
+        filter: blur(0.2px);
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* Dark footer: add a subtle light bed + copper haze behind logo */
+      .footer-brand .brand::before {
+        content: "";
+        position: absolute;
+        inset: -18px -22px;
+        border-radius: 30px;
+        background:
+          radial-gradient(220px 120px at 45% 52%, rgba(246, 247, 249, 0.18), transparent 72%),
+          radial-gradient(320px 160px at 30% 46%, rgba(196, 92, 38, 0.18), transparent 74%);
+        z-index: -1;
+        pointer-events: none;
       }
 
       /* Logo component (icon img + sharp SVG text) */
