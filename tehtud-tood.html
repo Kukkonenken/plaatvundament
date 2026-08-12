@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tehtud tööd – plaatvundamendi objektid | Plaatvundament</title>
+    <meta
+      name="description"
+      content="Fotogalerii plaatvundamendi ehituse ja pinnatööde etappidest. Vaated objektidelt üle Eesti; Cenex OÜ teostus."
+    />
+    <link rel="canonical" href="https://plaatvundament.com/tehtud-tood.html" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: { DEFAULT: "#0f172a", light: "#1e293b" },
+              accent: { DEFAULT: "#ff8c00" },
+              gold: "#eab308",
+            },
+            fontFamily: {
+              display: ["Inter", "Roboto", "system-ui", "sans-serif"],
+              sans: ["Inter", "Roboto", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B4ZB8XZWPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-B4ZB8XZWPF");
+    </script>
+  </head>
+  <body class="bg-white text-slate-800 antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+      >Liigu põhisisu juurde</a>
+
+    <header
+      id="site-nav"
+      class="sticky top-0 z-[100] border-b border-white/10 bg-slate-950/80 backdrop-blur-sm transition-shadow duration-300"
+    >
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <a href="index.html#hero" class="flex items-center gap-3 text-white">
+          <img src="assets/logo.webp" width="44" height="44" alt="Plaatvundament logo" class="h-11 w-11 rounded-lg object-contain" />
+          <span class="font-display text-lg font-semibold tracking-tight sm:text-xl">Plaatvundament</span>
+        </a>
+        <nav class="hidden items-center gap-6 lg:flex" aria-label="Põhinavigatsioon">
+          <a href="index.html#kasu" class="text-sm font-medium text-slate-200 hover:text-white">Miks plaatvundament</a>
+          <a href="index.html#teenused" class="text-sm font-medium text-slate-200 hover:text-white">Teenused</a>
+          <a href="tehtud-tood.html" class="text-sm font-semibold text-amber-200 hover:text-white" aria-current="page"
+            >Tehtud tööd</a
+          >
+          <a href="index.html#protsess" class="text-sm font-medium text-slate-200 hover:text-white">Protsess</a>
+          <a href="index.html#kkk" class="text-sm font-medium text-slate-200 hover:text-white">KKK</a>
+          <a href="kontakt.html" class="text-sm font-medium text-slate-200 hover:text-white">Kontakt</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a
+            href="kontakt.html"
+            class="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-orange-600 lg:inline-flex"
+            >Küsi pakkumist</a
+          >
+          <button
+            type="button"
+            id="nav-open"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 text-white lg:hidden"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="Ava menüü"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-nav" class="hidden border-t border-white/10 bg-slate-950 px-4 py-6 lg:hidden" aria-hidden="true">
+        <nav class="flex flex-col gap-3" aria-label="Mobiilmenüü">
+          <a href="index.html" class="text-base font-medium text-slate-200">Esileht</a>
+          <a href="tehtud-tood.html" class="text-base font-semibold text-amber-200">Tehtud tööd</a>
+          <a href="kontakt.html" class="text-base font-medium text-slate-200">Kontakt</a>
+          <button
+            type="button"
+            id="nav-close"
+            class="mt-4 text-sm text-slate-400 underline decoration-slate-500 underline-offset-4"
+          >
+            Sulge
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="py-12 lg:py-16">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <nav class="text-sm text-slate-500" aria-label="Asukoht">
+          <a href="index.html" class="hover:text-accent">Esileht</a>
+          <span aria-hidden="true"> / </span>
+          <span class="text-slate-800">Tehtud tööd</span>
+        </nav>
+        <div class="accent-line mt-8 mb-4"></div>
+        <h1 class="font-display text-3xl font-bold text-navy sm:text-4xl">Tehtud tööd</h1>
+        <p class="mt-4 max-w-3xl text-slate-600">
+          Karussell allpool sisaldab illustreerivaid objektifotosid (sh tüüpilised pinnase- ja betoon tööetapid).
+          Konkreetsete viidete või nõusolekuta objektiandmeid ei avalda — oma projekti võrdluseks ja näidismahtudeks
+          palume ühendust võtta.
+        </p>
+
+        <div
+          class="portfolio-carousel group relative mt-12"
+          data-carousel
+          tabindex="0"
+          role="region"
+          aria-roledescription="karussell"
+          aria-label="Tehtud plaatvundamendi tööde fotod"
+        >
+          <span class="sr-only" data-carousel-live aria-live="polite"></span>
+          <div class="carousel-viewport relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-sm">
+            <ul class="carousel-track m-0 list-none p-0">
+              <li class="carousel-slide" aria-hidden="true">
+                <img
+                  src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&q=82&auto=format&fit=crop"
+                  width="1400"
+                  height="788"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                  alt="Plaatvundamendi ja monoliitplaadi ehitus objektil – armatuur ja valmis valuga aluspind"
+                />
+              </li>
+              <li class="carousel-slide" aria-hidden="true">
+                <img
+                  src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=82&auto=format&fit=crop"
+                  width="1400"
+                  height="788"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Plaatvundamendi ettevalmistus ja pinnasetööd ehitusobjektil"
+                />
+              </li>
+              <li class="carousel-slide" aria-hidden="true">
+                <img
+                  src="https://images.unsplash.com/photo-1541976590-713941681591?w=1400&q=82&auto=format&fit=crop"
+                  width="1400"
+                  height="788"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Betoonitööd – plaadi valamine elamuehituse objektil"
+                />
+              </li>
+              <li class="carousel-slide" aria-hidden="true">
+                <img
+                  src="https://images.unsplash.com/photo-1590486803831-7c5a0c5e4c5b?w=1400&q=82&auto=format&fit=crop"
+                  width="1400"
+                  height="788"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Ehituskraana ja vundamenditööd elamuehituse objektil"
+                />
+              </li>
+              <li class="carousel-slide" aria-hidden="true">
+                <img
+                  src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1400&q=82&auto=format&fit=crop"
+                  width="1400"
+                  height="788"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Ehitusmasin pinnasetöödel järgneval etapil vundamendi rajamiseks"
+                />
+              </li>
+            </ul>
+          </div>
+          <div class="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-2 sm:px-4">
+            <button
+              type="button"
+              data-carousel-prev
+              class="pointer-events-auto rounded-full border border-slate-200/80 bg-white/95 p-3 text-navy shadow-md transition hover:bg-white disabled:opacity-40"
+              aria-label="Eelmine pilt"
+            >
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              data-carousel-next
+              class="pointer-events-auto rounded-full border border-slate-200/80 bg-white/95 p-3 text-navy shadow-md transition hover:bg-white disabled:opacity-40"
+              aria-label="Järgmine pilt"
+            >
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="mt-4 flex justify-center gap-2 sm:gap-2.5"
+            data-carousel-dots
+            role="tablist"
+            aria-label="Karusselli kuvad"
+          ></div>
+          <p class="mt-4 text-center text-sm text-slate-600">
+            Oma objekti tarvis detailne pakkumine: <a href="kontakt.html" class="font-medium text-accent hover:underline">kontaktivorm</a>.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white py-10">
+      <div
+        class="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
+      >
+        <div class="flex items-center gap-3">
+          <img src="assets/logo.webp" width="40" height="40" alt="Plaatvundament" class="h-10 w-10 rounded-lg object-contain" />
+          <div>
+            <p class="font-display font-semibold text-navy">Plaatvundament</p>
+            <p class="text-sm text-slate-500">Cenex OÜ</p>
+          </div>
+        </div>
+        <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600" aria-label="Jalus">
+          <a href="index.html" class="hover:text-navy">Esileht</a>
+          <a href="tehtud-tood.html" class="hover:text-navy">Tehtud tööd</a>
+          <a href="kontakt.html" class="hover:text-navy">Kontakt</a>
+        </nav>
+        <p class="text-sm text-slate-500">© <span id="year"></span> plaatvundament.com</p>
+      </div>
+    </footer>
+
+    <script src="js/script.js" defer></script>
+  </body>
+</html>
